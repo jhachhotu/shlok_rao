@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Indian Monuments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9933, #ffffff, #138808);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #555;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+        }
+        
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .monument-btn {
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+            border: none;
+            border-radius: 12px;
+            padding: 18px 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .monument-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+        }
+        
+        .monument-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .monument-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .content-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        
+        .monument-info {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .monument-info.active {
+            display: block;
+        }
+        
+        .monument-title {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .monument-image {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .monument-description {
+            color: #555;
+            line-height: 1.6;
+            text-align: left;
+            margin-top: 15px;
+        }
+        
+        .sound-info {
+            margin-top: 15px;
+            font-style: italic;
+            color: #777;
+        }
+        
+        .voice-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .voice-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .voice-btn:hover {
+            background: #45a049;
+        }
+        
+        .voice-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .speaking-indicator {
+            display: none;
+            margin-top: 10px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .monument-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Famous Indian Monuments</h1>
+        <p class="subtitle">Click on any monument to learn more, hear a traditional sound, and listen to the description</p>
+        
+        <div class="buttons-container">
+            <button class="monument-btn" data-monument="taj-mahal" data-sound="sitar">
+                <div class="monument-icon">🏛️</div>
+                <div>Taj Mahal</div>
+            </button>
+            
+            <button class="monument-btn" data-monument="red-fort" data-sound="tabla">
+                <div class="monument-icon">🏰</div>
+                <div>Red Fort</div>
+            </button>
+            
+            <button class="monument-btn" data-monument="qutub-minar" data-sound="flute">
+                <div class="monument-icon">🗼</div>
+                <div>Qutub Minar</div>
+            </button>
+            
+            <button class="monument-btn" data-monument="gateway-india" data-sound="shehnai">
+                <div class="monument-icon">⛩️</div>
+                <div>Gateway of India</div>
+            </button>
+            
+            <button class="monument-btn" data-monument="hawa-mahal" data-sound="ghungroo">
+                <div class="monument-icon">🏯</div>
+                <div>Hawa Mahal</div>
+            </button>
+        </div>
+        
+        <div class="content-section">
+            <div id="default-content">
+                <h2>Explore India's Heritage</h2>
+                <p>Select a monument from the buttons above to view detailed information about it, hear a traditional Indian sound, and listen to an audio description.</p>
+            </div>
+            
+            <div id="taj-mahal" class="monument-info">
+                <h2 class="monument-title">Taj Mahal</h2>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Taj_Mahal_%28Edited%29.jpeg/800px-Taj_Mahal_%28Edited%29.jpeg" alt="Taj Mahal" class="monument-image">
+                <p class="monument-description">
+                    The Taj Mahal is an ivory-white marble mausoleum on the southern bank of the river Yamuna in the Indian city of Agra. 
+                    It was commissioned in 1632 by the Mughal emperor Shah Jahan to house the tomb of his favourite wife, Mumtaz Mahal. 
+                    The Taj Mahal was designated as a UNESCO World Heritage Site in 1983 for being "the jewel of Muslim art in India and 
+                    one of the universally admired masterpieces of the world's heritage".
+                </p>
+                <p class="sound-info">Playing: Traditional Sitar music</p>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="speak-taj-mahal">Speak Description</button>
+                    <button class="voice-btn" id="stop-taj-mahal" disabled>Stop Speaking</button>
+                </div>
+                <div class="speaking-indicator" id="speaking-taj-mahal">Speaking about Taj Mahal...</div>
+            </div>
+            
+            <div id="red-fort" class="monument-info">
+                <h2 class="monument-title">Red Fort</h2>
+                <img src="Unknown2.jpeg" alt="Red Fort" class="monument-image">
+                <p class="monument-description">
+                    The Red Fort is a historic fort in the city of Delhi in India. It was the main residence of the emperors of the Mughal dynasty. 
+                    It was constructed in 1639 by the fifth Mughal Emperor Shah Jahan as the palace of his fortified capital Shahjahanabad. 
+                    The fort represents the peak in Mughal architecture under Shah Jahan and combines Persian palace architecture with Indian traditions.
+                </p>
+                <p class="sound-info">Playing: Traditional Tabla rhythm</p>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="speak-red-fort">Speak Description</button>
+                    <button class="voice-btn" id="stop-red-fort" disabled>Stop Speaking</button>
+                </div>
+                <div class="speaking-indicator" id="speaking-red-fort">Speaking about Red Fort...</div>
+            </div>
+            
+            <div id="qutub-minar" class="monument-info">
+                <h2 class="monument-title">Qutub Minar</h2>
+                <img src="Unknown4.jpeg" alt="Qutub Minar" class="monument-image">
+                <p class="monument-description">
+                    The Qutub Minar is a minaret that forms part of the Qutb complex, a UNESCO World Heritage Site in the Mehrauli area of Delhi, India. 
+                    Qutub Minar is a 73-metre (239.5 feet) tall tapering tower of five storeys, with a 14.3 metres (47 feet) base diameter, 
+                    reducing to 2.7 metres (9 feet) at the top of the peak. It contains a spiral staircase of 379 steps.
+                </p>
+                <p class="sound-info">Playing: Traditional Bansuri (flute) melody</p>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="speak-qutub-minar">Speak Description</button>
+                    <button class="voice-btn" id="stop-qutub-minar" disabled>Stop Speaking</button>
+                </div>
+                <div class="speaking-indicator" id="speaking-qutub-minar">Speaking about Qutub Minar...</div>
+            </div>
+            
+            <div id="gateway-india" class="monument-info">
+                <h2 class="monument-title">Gateway of India</h2>
+                <img src="Unknown3.jpeg" alt="Gateway of India" class="monument-image">
+                <p class="monument-description">
+                    The Gateway of India is an arch monument built during the 20th century in Mumbai, India. The monument was erected to commemorate 
+                    the landing of King-Emperor George V and Queen-Empress Mary at Apollo Bunder on their visit to India in 1911. 
+                    Built in Indo-Saracenic style, the foundation stone for the Gateway of India was laid on 31 March 1911.
+                </p>
+                <p class="sound-info">Playing: Traditional Shehnai music</p>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="speak-gateway-india">Speak Description</button>
+                    <button class="voice-btn" id="stop-gateway-india" disabled>Stop Speaking</button>
+                </div>
+                <div class="speaking-indicator" id="speaking-gateway-india">Speaking about Gateway of India...</div>
+            </div>
+            
+            <div id="hawa-mahal" class="monument-info">
+                <h2 class="monument-title">Hawa Mahal</h2>
+                <img src="Unknown1.jpeg" alt="Hawa Mahal" class="monument-image">
+                <p class="monument-description">
+                    The Hawa Mahal is a palace in the city of Jaipur, India. Built from red and pink sandstone, it is on the edge of the City Palace, 
+                    Jaipur, and extends to the Zenana, or women's chambers. The structure was built in 1799 by the Maharaja Sawai Pratap Singh. 
+                    Its unique five-story exterior is akin to the honeycomb of a beehive with its 953 small windows called jharokhas decorated with intricate latticework.
+                </p>
+                <p class="sound-info">Playing: Traditional Ghungroo (ankle bells) sound</p>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="speak-hawa-mahal">Speak Description</button>
+                    <button class="voice-btn" id="stop-hawa-mahal" disabled>Stop Speaking</button>
+                </div>
+                <div class="speaking-indicator" id="speaking-hawa-mahal">Speaking about Hawa Mahal...</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Explore the rich heritage of India through its magnificent monuments</p>
+        </footer>
+    </div>
+    
+    <!-- Audio elements for traditional Indian sounds -->
+    <audio id="sitar-sound" src="https://assets.mixkit.co/music/preview/mixkit-sitar-117.mp3" preload="auto"></audio>
+    <audio id="tabla-sound" src="https://assets.mixkit.co/music/preview/mixkit-indian-tabla-loop-119.mp3" preload="auto"></audio>
+    <audio id="flute-sound" src="https://assets.mixkit.co/music/preview/mixkit-bansuri-114.mp3" preload="auto"></audio>
+    <audio id="shehnai-sound" src="https://assets.mixkit.co/music/preview/mixkit-shehnai-115.mp3" preload="auto"></audio>
+    <audio id="ghungroo-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3" preload="auto"></audio>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.monument-btn');
+            const monumentInfos = document.querySelectorAll('.monument-info');
+            const defaultContent = document.getElementById('default-content');
+            
+            // Create audio objects for traditional sounds
+            const sounds = {
+                sitar: document.getElementById('sitar-sound'),
+                tabla: document.getElementById('tabla-sound'),
+                flute: document.getElementById('flute-sound'),
+                shehnai: document.getElementById('shehnai-sound'),
+                ghungroo: document.getElementById('ghungroo-sound')
+            };
+            
+            // Text-to-speech functionality
+            let speech = null;
+            
+            function speakText(text, speakingIndicatorId, stopButtonId) {
+                // Stop any ongoing speech
+                if (speech && speechSynthesis.speaking) {
+                    speechSynthesis.cancel();
+                }
+                
+                // Create new speech
+                speech = new SpeechSynthesisUtterance(text);
+                speech.rate = 0.9;
+                speech.pitch = 1;
+                speech.volume = 1;
+                
+                // Show speaking indicator and enable stop button
+                document.getElementById(speakingIndicatorId).style.display = 'block';
+                document.getElementById(stopButtonId).disabled = false;
+                
+                // When speech ends
+                speech.onend = function() {
+                    document.getElementById(speakingIndicatorId).style.display = 'none';
+                    document.getElementById(stopButtonId).disabled = true;
+                };
+                
+                // Start speaking
+                speechSynthesis.speak(speech);
+            }
+            
+            function stopSpeaking() {
+                if (speechSynthesis.speaking) {
+                    speechSynthesis.cancel();
+                }
+                
+                // Hide all speaking indicators and disable all stop buttons
+                document.querySelectorAll('.speaking-indicator').forEach(indicator => {
+                    indicator.style.display = 'none';
+                });
+                
+                document.querySelectorAll('.voice-btn').forEach(button => {
+                    if (button.textContent === 'Stop Speaking') {
+                        button.disabled = true;
+                    }
+                });
+            }
+            
+            // Set up event listeners for monument buttons
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get the monument ID and sound type from the button's data attributes
+                    const monumentId = this.getAttribute('data-monument');
+                    const soundType = this.getAttribute('data-sound');
+                    
+                    // Play the traditional sound
+                    if (sounds[soundType]) {
+                        sounds[soundType].currentTime = 0;
+                        sounds[soundType].play();
+                    }
+                    
+                    // Hide all monument info sections and default content
+                    monumentInfos.forEach(info => {
+                        info.classList.remove('active');
+                    });
+                    defaultContent.style.display = 'none';
+                    
+                    // Show the selected monument info
+                    const selectedMonument = document.getElementById(monumentId);
+                    if (selectedMonument) {
+                        selectedMonument.classList.add('active');
+                        
+                        // Auto-speak the description after a short delay
+                        setTimeout(() => {
+                            const description = selectedMonument.querySelector('.monument-description').textContent;
+                            const speakingIndicatorId = 'speaking-' + monumentId;
+                            const stopButtonId = 'stop-' + monumentId;
+                            speakText(description, speakingIndicatorId, stopButtonId);
+                        }, 1000);
+                    }
+                });
+            });
+            
+            // Set up event listeners for voice control buttons
+            document.getElementById('speak-taj-mahal').addEventListener('click', function() {
+                const description = document.querySelector('#taj-mahal .monument-description').textContent;
+                speakText(description, 'speaking-taj-mahal', 'stop-taj-mahal');
+            });
+            
+            document.getElementById('stop-taj-mahal').addEventListener('click', stopSpeaking);
+            
+            document.getElementById('speak-red-fort').addEventListener('click', function() {
+                const description = document.querySelector('#red-fort .monument-description').textContent;
+                speakText(description, 'speaking-red-fort', 'stop-red-fort');
+            });
+            
+            document.getElementById('stop-red-fort').addEventListener('click', stopSpeaking);
+            
+            document.getElementById('speak-qutub-minar').addEventListener('click', function() {
+                const description = document.querySelector('#qutub-minar .monument-description').textContent;
+                speakText(description, 'speaking-qutub-minar', 'stop-qutub-minar');
+            });
+            
+            document.getElementById('stop-qutub-minar').addEventListener('click', stopSpeaking);
+            
+            document.getElementById('speak-gateway-india').addEventListener('click', function() {
+                const description = document.querySelector('#gateway-india .monument-description').textContent;
+                speakText(description, 'speaking-gateway-india', 'stop-gateway-india');
+            });
+            
+            document.getElementById('stop-gateway-india').addEventListener('click', stopSpeaking);
+            
+            document.getElementById('speak-hawa-mahal').addEventListener('click', function() {
+                const description = document.querySelector('#hawa-mahal .monument-description').textContent;
+                speakText(description, 'speaking-hawa-mahal', 'stop-hawa-mahal');
+            });
+            
+            document.getElementById('stop-hawa-mahal').addEventListener('click', stopSpeaking);
+        });
+    </script>
+</body>
+</html>
